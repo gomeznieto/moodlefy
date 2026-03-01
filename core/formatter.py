@@ -1,4 +1,4 @@
-
+import re
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
@@ -24,16 +24,35 @@ def format_code(code_string: str, language: str, theme: str, show_linenos: bool)
     try:
         lexer = get_lexer_by_name(language, stripall=True)
     except:
-        # Fallback a 'text' si el lenguaje no es reconocido
         lexer = get_lexer_by_name("text", stripall=True)
-        
+    
+    borderStyle = 'border-radius: 5px; margin:.2em .2em;'
     formatter = HtmlFormatter(
         style=theme,
-        linenos=show_linenos,
-        full=False,  # Retorna solo el bloque de código
-        noclasses=True # Usar estilos en línea
+        linenos=False,
+        full=False,
+        noclasses=True,
+        cssstyles=borderStyle,
+        prestyles='padding: .2em'
     )
     
     formatted_html = highlight(code_string, lexer, formatter)
+    if show_linenos:
+        formatted_html = insert_line_numbers(formatted_html)
     
     return FormatterResult(html=formatted_html)
+
+def insert_line_numbers(html):
+    match = re.search('(<pre[^>]*>)(.*)(</pre>)', html, re.DOTALL)
+    if not match: return html
+
+    pre_open = match.group(1)
+    pre = match.group(2)
+    pre_close = match.group(3)
+
+    html = html.replace(pre_close, '</pre></td></tr></table>')
+    numbers = range(1, pre.count('\n') + 1)
+    format = '%' + str(len(str(numbers[-1]))) + 'i'
+    lines = '\n'.join(format % i for i in numbers)
+    html = html.replace(pre_open, '<table><tr><td style="border-radius: 5px 0px 0px 5px; color: #f1fa8c; background-color: #44475a; padding-left: 5px; padding-right: 5px;">' + pre_open + lines + '</pre></td><td>' + pre_open)
+    return html

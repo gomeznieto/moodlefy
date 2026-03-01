@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 
-ALLOWED_EXTENSIONS = {'cpp', 'h', 'hpp', 'py', 'js', 'html', 'htm', 'json', 'cs', 'css'}
+ALLOWED_EXTENSIONS = {'cpp', 'c', 'h', 'hpp', 'py', 'js', 'html', 'htm', 'json', 'cs', 'css', 'sql', 'go', 'rust'}
 
 def allowed_file(filename: str) -> bool:
     """
