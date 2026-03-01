@@ -1,75 +1,257 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
     <meta charset="UTF-8">
-    <title>Formateador de Código</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moodlefy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: sans-serif; margin: 2em; }
-        .error { color: red; }
-        .form-group { margin-bottom: 1em; }
+        :root {
+            --base: #eff1f5;
+            --text: #4c4f69;
+            --lavender: #7287fd;
+            --surface0: #ccd0da;
+            --rosewater: #dc8a78;
+            --mantle: #e6e9ef;
+            --crust: #4c4f69;
+        }
+
+        .dark {
+            --base: #1e1e2e;
+            --text: #cdd6f4;
+            --lavender: #b4befe;
+            --surface0: #313244;
+            --rosewater: #f5c2e7;
+            --mantle: #181825;
+            --crust: #cdd6f4;
+        }
+
+        body {
+            background-color: var(--base);
+            color: var(--text);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .toggle-btn {
+            background-color: var(--surface0);
+            color: var(--text);
+            transition: all 0.3s;
+        }
+
+        .toggle-btn:hover {
+            background-color: var(--lavender);
+            color: var(--base);
+        }
+
+        textarea, select {
+            background-color: var(--surface0);
+            color: var(--text);
+            border-color: var(--surface0);
+            transition: all 0.3s;
+        }
+
+        textarea:focus, select:focus {
+            border-color: var(--lavender);
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: var(--lavender);
+            color: var(--base);
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            filter: brightness(1.1);
+        }
+
+        .btn-copy {
+            background-color: var(--surface0);
+            color: var(--text);
+            transition: all 0.3s;
+        }
+
+        .btn-copy:hover {
+            background-color: var(--rosewater);
+            color: var(--base);
+        }
+
+        h1 {
+            color: var(--text);
+            transition: color 0.3s;
+        }
+
+        label {
+            color: var(--text);
+            transition: color 0.3s;
+        }
+
+        .error-msg {
+            color: #f38ba8;
+            transition: color 0.3s;
+        }
+
+        .result-label {
+            color: var(--text);
+            transition: color 0.3s;
+        }
     </style>
 </head>
-<body>
-    <h1>Formateador de Código</h1>
-    {% if error %}
-        <p class="error">{{ error }}</p>
-    {% endif %}
-    <form method="POST" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="language">Lenguaje:</label>
-            <select id="language" name="language">
-                <option value="cpp">C++</option>
-                <option value="cs">C#</option>
-                <option value="python">Python</option>
-                <option value="javascript">JavaScript</option>
-                <option value="sql">SQL</option>
-                <option value="css">CSS</option>
-                <option value="html">HTML</option>
-                <option value="json">JSON</option>
-            </select>
+<body class="min-h-screen p-6">
+    <div class="max-w-4xl mx-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-4xl font-bold">Moodlefy</h1>
+            <button id="theme-toggle" class="toggle-btn px-4 py-2 rounded-lg text-xl" title="Cambiar tema">
+                🌙
+            </button>
         </div>
-        <div class="form-group">
-            <label for="theme">Tema:</label>
-            <select id="theme" name="theme">
-                <option value="monokai">Monokai</option>
-                <option value="github">GitHub</option>
-                <option value="dracula">Dracula</option>
-                <option value="native">Native</option>
-            </select>
+
+        {% if error %}
+            <div class="error-msg mb-4 p-3 rounded-lg" style="background-color: var(--surface0);">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-4">
+                <textarea 
+                    id="code" 
+                    name="code" 
+                    rows="12" 
+                    class="w-full p-4 rounded-xl border-2"
+                    placeholder="Pegá tu código aquí o subí un archivo..."
+                >{{ request.form.get('code', '') }}</textarea>
+            </div>
+
+            <div class="flex flex-wrap gap-4 items-center mb-4 p-3 rounded-lg" style="background-color: var(--surface0);">
+                <div class="flex items-center gap-2">
+                    <label for="language" class="font-semibold">Lenguaje:</label>
+                    <select id="language" name="language" class="p-2 rounded-lg border-2">
+                        <option value="cpp" {% if request.form.get('language') == 'cpp' %}selected{% endif %}>C++</option>
+                        <option value="python" {% if request.form.get('language') == 'python' %}selected{% endif %}>Python</option>
+                        <option value="javascript" {% if request.form.get('language') == 'javascript' %}selected{% endif %}>JavaScript</option>
+                        <option value="html" {% if request.form.get('language') == 'html' %}selected{% endif %}>HTML</option>
+                        <option value="json" {% if request.form.get('language') == 'json' %}selected{% endif %}>JSON</option>
+                        <option value="java" {% if request.form.get('language') == 'java' %}selected{% endif %}>Java</option>
+                        <option value="rust" {% if request.form.get('language') == 'rust' %}selected{% endif %}>Rust</option>
+                        <option value="go" {% if request.form.get('language') == 'go' %}selected{% endif %}>Go</option>
+                        <option value="go" {% if request.form.get('language') == 'cs' %}selected{% endif %}>Go</option>
+                        <option value="go" {% if request.form.get('language') == 'sql' %}selected{% endif %}>SQL</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <label for="theme" class="font-semibold">Tema:</label>
+                    <select id="theme" name="theme" class="p-2 rounded-lg border-2">
+                        <option value="monokai" {% if request.form.get('theme') == 'monokai' %}selected{% endif %}>Monokai</option>
+                        <option value="github" {% if request.form.get('theme') == 'github' %}selected{% endif %}>GitHub</option>
+                        <option value="dracula" {% if request.form.get('theme') == 'dracula' %}selected{% endif %}>Dracula</option>
+                        <option value="native" {% if request.form.get('theme') == 'native' %}selected{% endif %}>Native</option>
+                        <option value="nord" {% if request.form.get('theme') == 'nord' %}selected{% endif %}>Nord</option>
+                        <option value="solarized-light" {% if request.form.get('theme') == 'solarized-light' %}selected{% endif %}>Solarized Light</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" id="linenos" name="linenos" {% if request.form.get('linenos') %}checked{% endif %} class="w-5 h-5">
+                    <label for="linenos" class="font-semibold">Números de línea</label>
+                </div>
+            </div>
+
+                <div>
+                    <label for="file" class="block mb-2 font-semibold">O subir archivo:</label>
+                    <div class="flex flex-wrap gap-4 content-center items-center mb-6">
+                        <div class="flex-1">
+                            <input type="file" id="file" name="file" accept=".cpp,.h,.py,.js,.html,.json,.java,.rs,.go" class="w-full p-2 rounded-lg border-2">
+                        </div>
+                        <div class="flex items-end">
+                            <button type="submit" class="btn-primary px-8 py-3 rounded-xl font-bold text-lg">
+                                Moodleficar 🚀
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            {% if formatted_html %}
+            <div class="result-label text-2xl font-bold mb-3">HTML Resultante:</div>
+            <div class="relative">
+                <button id="copy-btn" class="btn-copy px-4 py-2 rounded-lg font-semibold mb-2">
+                    📋 Copiar al Portapapeles
+                </button>
+                <textarea 
+                    id="html-result" 
+                    readonly 
+                    rows="15" 
+                    class="w-full p-4 rounded-xl border-2 font-mono text-sm"
+                >{{ formatted_html }}</textarea>
+            </div>
+            {% endif %}
+
+            {% if formatted_html %}
+            <div class="result-label text-2xl font-bold mb-3 mt-3">HTML Resultante:</div>
+            <div class="w-full" >
+                {{ formatted_html | safe }}
+            </div>
+            {% endif %}
         </div>
-        <div class="form-group">
-            <label for="linenos">Mostrar números de línea:</label>
-            <input type="checkbox" id="linenos" name="linenos">
-        </div>
-        <hr>
-        <div class="form-group">
-            <label for="file">Subir archivo:</label>
-            <input type="file" id="file" name="file" accept=".cpp,.h,.py,.js,.html,.json">
-        </div>
-        <hr>
-        <div class="form-group">
-            <label for="code">O pegar código aquí:</label><br>
-            <textarea id="code" name="code" rows="15" cols="80"></textarea>
-        </div>
-        <br>
-        <button type="submit">Formatear</button>
-    </form>
-    
-    {% if formatted_html %}
-        <h2>HTML Resultante:</h2>
-        <button type="button" onclick="copyToClipboard()">Copiar HTML</button>
-        <textarea id="html-result" readonly rows="15" style="width: 100%; font-family: monospace;">{{ formatted_html }}</textarea>
-    {% endif %}
-    
-    <script>
+
+        <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        function updateThemeUI() {
+            if (htmlElement.classList.contains('dark')) {
+                themeToggle.textContent = '☀️';
+            } else {
+                themeToggle.textContent = '🌙';
+            }
+        }
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            if (savedTheme === 'light') {
+                htmlElement.classList.remove('dark');
+            } else {
+                htmlElement.classList.add('dark');
+            }
+        } else {
+            htmlElement.classList.add('dark');
+        }
+        updateThemeUI();
+
+        themeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            const newTheme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            updateThemeUI();
+        });
+
         function copyToClipboard() {
             const textarea = document.getElementById('html-result');
+            const copyBtn = document.getElementById('copy-btn');
+
             navigator.clipboard.writeText(textarea.value).then(function() {
-                alert('¡Copiado!');
+                const originalText = copyBtn.textContent;
+                const originalBg = copyBtn.style.backgroundColor;
+                copyBtn.textContent = '✅ ¡Copiado!';
+                copyBtn.style.backgroundColor = '#a6e3a1';
+                copyBtn.style.color = '#1e1e2e';
+                setTimeout(function() {
+                    copyBtn.textContent = originalText;
+                    copyBtn.style.backgroundColor = originalBg;
+                    copyBtn.style.color = '';
+                }, 2000);
             }, function(err) {
-                console.error('Error al copiar: ', err);
-            });
+                    console.error('Error al copiar: ', err);
+                    alert('Error al copiar al portapapeles');
+                });
         }
-    </script>
-</body>
+
+        const copyBtn = document.getElementById('copy-btn');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', copyToClipboard);
+        }
+        </script>
+    </body>
 </html>
