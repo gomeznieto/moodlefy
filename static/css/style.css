@@ -127,3 +127,12 @@ label {
     display: inline-block;
     animation: rocket-fly 0.6s ease infinite;
 }
+
+div.highlight {
+    color: initial !important;
+}
+
+div.highlight pre {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+}

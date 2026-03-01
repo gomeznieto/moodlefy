@@ -1,2 +1,45 @@
-GEMINI.md
-sdd/*
+# =========================
+# Entornos Virtuales Python
+# =========================
+venv/
+env/
+ENV/
+.venv/
+*.pyc
+__pycache__/
+
+# =========================
+# Variables de Entorno y Secretos
+# =========================
+.env
+.flaskenv
+instance/
+
+# =========================
+# Frontend y Node (Tailwind CLI)
+# =========================
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+
+# =========================
+# Archivos del Sistema Operativo y Editores
+# =========================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# =========================
+# Logs y Bases de Datos Locales
+# =========================
+*.log
+*.sqlite3
+
+# =========================
+# SDD / IA Logs
+# =========================
+sdd/
+gemini.md

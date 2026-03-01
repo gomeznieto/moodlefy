@@ -33,10 +33,11 @@ def format_code(code_string: str, language: str, theme: str, show_linenos: bool)
         full=False,
         noclasses=True,
         cssstyles=borderStyle,
-        prestyles='padding: .2em'
+        prestyles='padding: .5em 1em; white-space: pre-wrap; word-wrap: break-word;'
     )
     
     formatted_html = highlight(code_string, lexer, formatter)
+
     if show_linenos:
         formatted_html = insert_line_numbers(formatted_html)
     

@@ -23,8 +23,16 @@
 
         <meta name="theme-color" content="#1e1e2e">
         <title>Moodlefy</title>
-        <script src="https://cdn.tailwindcss.com"></script>
+
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+        <!--TAILWINDS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- CODE MIRROR --> 
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/codemirror-bundle.css') }}">
+        
+        <!-- FONTS -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Playwrite+NZ+Basic:wght@100..400&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -49,7 +57,7 @@
                 {% endif %}
 
                 <form method="POST" enctype="multipart/form-data">
-                    <div class="mb-4">
+                    <div class="mb-4 relative rounded-xl overflow-hidden">
                         <textarea 
                             id="code" 
                             name="code" 
@@ -57,6 +65,7 @@
                             class="w-full p-4 rounded-xl border-2"
                             placeholder="Pegá tu código aquí o subí un archivo..."
                         >{{ request.form.get('code', '') }}</textarea>
+                        <button type="button" id="format-btn" class="absolute bottom-3 right-3 mt-4 btn-primary px-8 py-3 rounded-xl font-bold text-sm cursor-pointer">Indentación 🪄</button>
                     </div>
 
                     <div class="flex flex-wrap gap-4 items-center mb-4 p-3 rounded-lg" style="background-color: var(--surface0);">
@@ -79,12 +88,24 @@
                         <div class="flex items-center gap-2">
                             <label for="theme" class="font-semibold">Tema:</label>
                             <select id="theme" name="theme" class="cursor-pointer p-2 rounded-lg border-2">
-                                <option value="monokai" {% if request.form.get('theme') == 'monokai' %}selected{% endif %}>Monokai</option>
-                                <option value="github" {% if request.form.get('theme') == 'github' %}selected{% endif %}>GitHub</option>
-                                <option value="dracula" {% if request.form.get('theme') == 'dracula' %}selected{% endif %}>Dracula</option>
-                                <option value="native" {% if request.form.get('theme') == 'native' %}selected{% endif %}>Native</option>
-                                <option value="nord" {% if request.form.get('theme') == 'nord' %}selected{% endif %}>Nord</option>
-                                <option value="solarized-light" {% if request.form.get('theme') == 'solarized-light' %}selected{% endif %}>Solarized Light</option>
+                                <optgroup label="Alto Contraste">
+                                    <option value="bw" {% if request.form.get('theme') == 'bw' %}selected{% endif %}>BW</option>
+                                    <option value="igor" {% if request.form.get('theme') == 'igor' %}selected{% endif %}>Igor</option>
+                                    <option value="rrt" {% if request.form.get('theme') == 'rrt' %}selected{% endif %}>RRT</option>
+                                </optgroup>
+                                <optgroup label="Oscuros">
+                                    <option value="monokai" {% if request.form.get('theme') == 'monokai' %}selected{% endif %}>Monokai</option>
+                                    <option value="github-dark" {% if request.form.get('theme') == 'github-dark' %}selected{% endif %}>GitHub</option>
+                                    <option value="dracula" {% if request.form.get('theme') == 'dracula' %}selected{% endif %}>Dracula</option>
+                                    <option value="native" {% if request.form.get('theme') == 'native' %}selected{% endif %}>Native</option>
+                                    <option value="nord" {% if request.form.get('theme') == 'nord' %}selected{% endif %}>Nord</option>
+                                    <option value="one-dark" {% if request.form.get('theme') == 'one-dark' %}selected{% endif %}>One Dark</option>
+                                    <option value="material" {% if request.form.get('theme') == 'material' %}selected{% endif %}>Material</option>
+                                </optgroup>
+                                <optgroup label="Claros">
+                                    <option value="vs" {% if request.form.get('theme') == 'vs' %}selected{% endif %}>VS</option>
+                                    <option value="solarized-light" {% if request.form.get('theme') == 'solarized-light' %}selected{% endif %}>Solarized</option>
+                                </optgroup>
                             </select>
                         </div>
 
@@ -130,7 +151,7 @@
 
                 {% if formatted_html %}
                 <div class="result-label text-2xl font-bold mb-4 mt-4">HTML Preview:</div>
-                <div class="w-full" >
+                <div class="w-full text-wrap" >
                     {% autoescape false %}
                     {{ formatted_html | safe }}
                     {% endautoescape %}
@@ -164,8 +185,10 @@
 
             </p>
         </footer>
-        <script src="{{ url_for('static', filename='js/copy-clipboard.js') }}" defer></script>
+        <script src="{{ url_for('static', filename='js/codemirror-bundle.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/config-codemirror.js') }}"></script>
         <script src="{{ url_for('static', filename='js/theme-toggle.js') }}" defer></script>
+        <script src="{{ url_for('static', filename='js/copy-clipboard.js') }}" defer></script>
         <script>
         const year = document.getElementById("year")
         year.innerText = new Date().getFullYear();
