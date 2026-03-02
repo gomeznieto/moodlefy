@@ -25,7 +25,7 @@ Convierte tu código a HTML con resaltado de sintaxis y estilos inline. Ideal pa
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/tu-usuario/moodlefy.git
+git clone https://github.com/gomeznieto/moodlefy.git
 cd moodlefy
 
 # 2. Crear entorno virtual (opcional pero recomendado)
