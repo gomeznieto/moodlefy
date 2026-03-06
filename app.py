@@ -32,11 +32,13 @@ def index():
     """
     error = None
     formatted_html = None
+    raw_code = '//Ingresa tu Código' 
     
     if request.method == 'POST':
         code = request.form.get('code')
         file = request.files.get('file')
-        
+        raw_code = code
+
         language = request.form.get('language', 'cpp')
         theme = request.form.get('theme', 'monokai')
         linenos = request.form.get('linenos') == 'on'
@@ -47,9 +49,7 @@ def index():
             if allowed_file(file.filename):
                 sec_filename = secure_filename(file.filename)
                 try:
-                    code_to_format = file.read().decode('utf-8')
-                    resultado = format_code(code_to_format, language, theme, linenos)
-                    formatted_html = resultado.html
+                    raw_code = file.read().decode('utf-8')
                 except UnicodeDecodeError:
                     error = "El archivo no es de texto válido o está corrupto."
             else:
@@ -58,7 +58,7 @@ def index():
             resultado = format_code(code, language, theme, linenos)
             formatted_html = resultado.html
             
-    return render_template('index.html', formatted_html=formatted_html, error=error)
+    return render_template('index.html', formatted_html=formatted_html, error=error, raw_code = raw_code)
 
 if __name__ == '__main__':
     app.run(debug=True)
