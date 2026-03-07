@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 
-ALLOWED_EXTENSIONS = {'cpp', 'c', 'h', 'hpp', 'py', 'js', 'html', 'htm', 'json', 'cs', 'css', 'sql', 'go', 'rust'}
+ALLOWED_EXTENSIONS = {'cpp', 'c', 'h', 'hpp', 'py', 'js', 'html', 'htm', 'json', 'cs', 'css', 'sql', 'css', 'go', 'rust'}
 
 def allowed_file(filename: str) -> bool:
     """
@@ -32,7 +32,7 @@ def index():
     """
     error = None
     formatted_html = None
-    raw_code = '//Ingresa tu Código' 
+    raw_code = '' 
     
     if request.method == 'POST':
         code = request.form.get('code')

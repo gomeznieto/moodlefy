@@ -136,3 +136,8 @@ div.highlight pre {
     white-space: pre-wrap !important;
     word-wrap: break-word !important;
 }
+
+.subtitle{
+    color: var(--mauve);
+    font-size: 12px;
+}
