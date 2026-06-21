@@ -45,15 +45,31 @@ def format_code(code_string: str, language: str, theme: str, show_linenos: bool)
 
 def insert_line_numbers(html):
     match = re.search('(<pre[^>]*>)(.*)(</pre>)', html, re.DOTALL)
-    if not match: return html
+    if not match: 
+        return html
 
     pre_open = match.group(1)
-    pre = match.group(2)
+    pre_content = match.group(2)
     pre_close = match.group(3)
 
-    html = html.replace(pre_close, '</pre></td></tr></table>')
-    numbers = range(1, pre.count('\n') + 1)
-    format = '%' + str(len(str(numbers[-1]))) + 'i'
-    lines = '\n'.join(format % i for i in numbers)
-    html = html.replace(pre_open, '<table><tr><td style="border-radius: 5px 0px 0px 5px; background-color: #44475a; padding-left: 5px; padding-right: 5px;">' + pre_open + lines + '</pre></td><td>' + pre_open)
-    return html
+    # Contar líneas según los saltos del contenido
+    num_lines = pre_content.count('\n') + 1
+    numbers = range(1, num_lines + 1)
+    
+    format_str = '%' + str(len(str(numbers[-1]))) + 'i'
+    lines = '\n'.join(format_str % i for i in numbers)
+
+    # Obtenemos los índices de inicio y fin del bloque <pre> original
+    start, end = match.span()
+    
+    # Reconstruimos la tabla limpiamente sin usar .replace()
+    table_html = (
+        f'<table><tr>'
+        f'<td style="border-radius: 5px 0px 0px 5px; background-color: #44475a; padding-left: 5px; padding-right: 5px;">'
+        f'{pre_open}{lines}{pre_close}'
+        f'</td>'
+        f'<td>{pre_open}{pre_content}{pre_close}</td>'
+        f'</tr></table>'
+    )
+
+    return html[:start] + table_html + html[end:]
