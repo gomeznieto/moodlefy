@@ -33,7 +33,7 @@ def format_code(code_string: str, language: str, theme: str, show_linenos: bool)
         full=False,
         noclasses=True,
         cssstyles=borderStyle,
-        prestyles='padding: .5em 1em; white-space: pre-wrap; word-wrap: break-word;'
+        prestyles='padding: .5em 1em; color: #f1fa8c; white-space: pre-wrap; word-wrap: break-word;'
     )
     
     formatted_html = highlight(code_string, lexer, formatter)
@@ -55,6 +55,6 @@ def insert_line_numbers(html):
     numbers = range(1, pre.count('\n') + 1)
     format = '%' + str(len(str(numbers[-1]))) + 'i'
     lines = '\n'.join(format % i for i in numbers)
-    html = html.replace(pre_open, '<table><tr><td style="border-radius: 5px 0px 0px 5px; color: #f1fa8c; background-color: #44475a; padding-left: 5px; padding-right: 5px;">')
+    html = html.replace(pre_open, '<table><tr><td style="border-radius: 5px 0px 0px 5px; background-color: #44475a; padding-left: 5px; padding-right: 5px;">')
     html = html.replace(lines, '</td><td>' + lines + '</td></tr></table>')
     return html
