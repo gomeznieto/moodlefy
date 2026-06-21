@@ -9,18 +9,6 @@ class FormatterResult:
     html: str
 
 def format_code(code_string: str, language: str, theme: str, show_linenos: bool) -> FormatterResult:
-    """
-    Formatea una cadena de código a HTML con estilos en línea.
-    
-    Args:
-        code_string: La cadena de código a formatear.
-        language: El nombre del lenguaje de programación (ej. "cpp", "python").
-        theme: El nombre del tema de Pygments a usar (ej. "default", "monokai").
-        show_linenos: Booleano para indicar si se deben mostrar números de línea.
-
- Un objeto Formatter    Returns:
-       Result conteniendo el código HTML formateado con estilos en línea.
-    """
     try:
         lexer = get_lexer_by_name(language, stripall=True)
     except:
@@ -33,7 +21,7 @@ def format_code(code_string: str, language: str, theme: str, show_linenos: bool)
         full=False,
         noclasses=True,
         cssstyles=borderStyle,
-        prestyles='padding: .5em 1em; white-space: pre-wrap; word-wrap: break-word; color: #f1fa8c;'
+        prestyles='padding: .5em 1em; white-space: pre; overflow-x: auto; margin: 0; line-height: 1.5; color: #f1fa8c;'
     )
     
     formatted_html = highlight(code_string, lexer, formatter)
@@ -52,23 +40,22 @@ def insert_line_numbers(html):
     pre_content = match.group(2)
     pre_close = match.group(3)
 
-    # Contar líneas según los saltos del contenido
     num_lines = pre_content.count('\n') + 1
     numbers = range(1, num_lines + 1)
     
     format_str = '%' + str(len(str(numbers[-1]))) + 'i'
     lines = '\n'.join(format_str % i for i in numbers)
 
-    # Obtenemos los índices de inicio y fin del bloque <pre> original
     start, end = match.span()
     
-    # Reconstruimos la tabla limpiamente sin usar .replace()
     table_html = (
-        f'<table><tr>'
-        f'<td style="border-radius: 5px 0px 0px 5px; background-color: #44475a; padding-left: 5px; padding-right: 5px;">'
+        f'<table style="border-collapse: collapse; margin: 0; padding: 0; width: 100%;"><tr>'
+        f'<td style="border-radius: 5px 0px 0px 5px; background-color: #44475a; padding: 0; margin: 0; vertical-align: top; width: 1%;">'
         f'{pre_open}{lines}{pre_close}'
         f'</td>'
-        f'<td>{pre_open}{pre_content}{pre_close}</td>'
+        f'<td style="padding: 0; margin: 0; vertical-align: top;">'
+        f'{pre_open}{pre_content}{pre_close}'
+        f'</td>'
         f'</tr></table>'
     )
 
