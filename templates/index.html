@@ -1,59 +1,61 @@
 <!DOCTYPE html>
 <html lang="es" class="dark">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Convierte tu código a HTML con estilos inline. Ideal para pegar en Moodle, foros y editores TinyMCE sin perder el resaltado de sintaxis.">
-        <meta name="keywords" content="Moodle, Formateador Código, Highlight, TinyMCE, Programación, Catppuccin">
-        <meta name="author" content="Alejandro Gomez Nieto">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Convierte tu código a HTML con estilos inline. Ideal para pegar en Moodle, foros y editores TinyMCE sin perder el resaltado de sintaxis.">
+    <meta name="keywords" content="Moodle, Formateador Código, Highlight, TinyMCE, Programación, Catppuccin">
+    <meta name="author" content="Alejandro Gomez Nieto">
 
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://tu-dominio.com/">
-        <meta property="og:title" content="Moodlefy 🚀 Formateo de código listo para Moodle">
-        <meta property="og:description" content="Pegá tu código, elegí un tema Catppuccin y llevalo directo a tus foros con estilos inline. Rápido y profesional.">
-        <meta property="og:image" content="{{ url_for('static', filename='img/og-image.png') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tu-dominio.com/">
+    <meta property="og:title" content="Moodlefy 🚀 Formateo de código listo para Moodle">
+    <meta property="og:description" content="Pegá tu código, elegí un tema Catppuccin y llevalo directo a tus foros con estilos inline. Rápido y profesional.">
+    <meta property="og:image" content="{{ url_for('static', filename='img/og-image.png') }}">
 
-        <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:url" content="https://tu-dominio.com/">
-        <meta property="twitter:title" content="Moodlefy 🚀">
-        <meta property="twitter:description" content="Formateador de código con estilos inline para foros universitarios.">
-        <meta property="twitter:image" content="{{ url_for('static', filename='img/og-image.png') }}">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tu-dominio.com/">
+    <meta property="twitter:title" content="Moodlefy 🚀">
+    <meta property="twitter:description" content="Formateador de código con estilos inline para foros universitarios.">
+    <meta property="twitter:image" content="{{ url_for('static', filename='img/og-image.png') }}">
 
-        <link rel="icon" type="image/svg" href="{{ url_for('static', filename='img/favicon.svg') }}">
+    <link rel="icon" type="image/svg" href="{{ url_for('static', filename='img/favicon.svg') }}">
 
-        <meta name="theme-color" content="#1e1e2e">
-        <title>Moodlefy</title>
+    <meta name="theme-color" content="#1e1e2e">
+    <title>Moodlefy</title>
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-        <!--TAILWINDS -->
-        <script src="https://cdn.tailwindcss.com"></script>
+    <!--TAILWINDS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-        <!-- CODE MIRROR --> 
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/codemirror-bundle.css') }}">
-        
-        <!-- FONTS -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Playwrite+NZ+Basic:wght@100..400&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    </head>
-    <body class="min-h-screen flex flex-col justify-between">
-        <content class="p-6">
-            <div class="max-w-4xl mx-auto">
-                <div class="flex justify-between items-center mb-4">
-                    <div class="flex gap-4">
-                        <h1 class="text-4xl font-bold">Moodlefy</h1>
-                        <span class="text-sm text-slate-600 flex items-end pb-2">v 1.1</span>
-                    </div>
-                    <button id="theme-toggle" class="toggle-btn px-4 py-2 rounded-lg text-xl" title="Cambiar tema">
-                        🌙
-                    </button>
-                </div>
-        <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 mb-6">
-          <h2 class="text-lg font-semibold text-slate-800 mb-1">Embellecé y formateá tu código</h2>
-          <p class="text-sm text-slate-600">
-              Optimizado para Moodle. Copiá el resultado, andá al editor de Moodle, activá la vista de código fuente HTML (botón <strong>&lt;/&gt;</strong>) y pegalo directamente.
-          </p>
+    <!-- CODE MIRROR --> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/codemirror-bundle.css') }}">
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+NZ+Basic:wght@100..400&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  </head>
+  <body class="min-h-screen flex flex-col justify-between">
+    <content class="p-6">
+      <div class="max-w-4xl mx-auto">
+        <div class="flex justify-between items-center mb-4">
+          <div>
+            <div class="flex gap-4">
+              <h1 class="text-4xl font-bold">Moodlefy</h1>
+              <span class="text-sm text-slate-600 flex items-end pb-2">v 2.1</span>
+            </div>
+            <div>
+              <p class="description text-sm">
+                Formateá, estilizá y optimizá tu código. Diseñado para plataformas <span class="font-bold">Moodle</span>. 
+              </p>
+
+            </div>
+          </div>
+          <button id="theme-toggle" class="toggle-btn px-4 py-2 rounded-lg text-xl" title="Cambiar tema">
+            🌙
+          </button>
         </div>
 
         {% if error %}
@@ -63,18 +65,7 @@
         {% endif %}
 
         <form method="POST" id="form" enctype="multipart/form-data">
-          <label for="file" class="block mb-2 font-semibold">Ingresar Código:</label>
-          <div class="mb-4 relative rounded-xl overflow-hidden">
-            <textarea 
-              id="code" 
-              name="code" 
-              rows="12" 
-              class="w-full p-4 rounded-xl border-2"
-              placeholder="Pegá tu código aquí o subí un archivo..."
-            >{{ raw_code if raw_code else request.form.get('code', '') }}</textarea>
-            <button type="button" id="format-btn" class="absolute bottom-3 right-3 mt-4 btn-primary px-8 py-3 rounded-xl font-bold text-sm cursor-pointer">Indentación 🪄</button>
-          </div>
-
+          <!-- Tools -->
           <div class="flex flex-wrap gap-4 items-center mb-4 p-3 rounded-lg" style="background-color: var(--surface0);">
             <div class="flex items-center gap-2">
               <label for="language" class="font-semibold">Lenguaje:</label>
@@ -122,9 +113,21 @@
               <label for="linenos" class="font-semibold">Números de línea</label>
             </div>
           </div>
+          <!-- Fin de Tools -->
+
+          <div class="mb-4 relative rounded-xl overflow-hidden">
+            <textarea 
+              id="code" 
+              name="code" 
+              rows="12" 
+              class="w-full p-4 rounded-xl border-2"
+              placeholder="Pegá tu código aquí o subí un archivo..."
+            >{{ raw_code if raw_code else request.form.get('code', '') }}</textarea>
+            <button type="button" id="format-btn" class="absolute bottom-3 right-3 mt-4 btn-primary px-8 py-3 rounded-xl font-bold text-sm cursor-pointer">Indentación 🪄</button>
+          </div>
 
           <div>
-            <label for="file" class="block mb-2 font-semibold">O subir archivo:</label>
+            <label for="file" class="block mb-2 font-semibold">O subí un archivo:</label>
             <div class="flex flex-wrap gap-4 content-center items-center mb-6">
               <div class="flex-1">
                 <input type="file" id="file" name="file" accept=".cpp,.h,.py,.js,.html,.json,.java,.rs,.go,.cs,.sql,.css" class="w-full p-2 rounded-lg border-2 border-slate-600">
@@ -133,14 +136,15 @@
           </div>
           <div class="flex items-end">
             <button type="submit" id="submit-btn" class="btn-primary px-8 py-3 rounded-xl font-bold text-xl flex items-center gap-2 mx-auto">
-              Moodleficar
+              Moodleficar 
               <span class="rocket">🚀</span>
             </button>
           </div>
         </form>
 
         {% if formatted_html %}
-        <div class="result-label text-2xl font-bold mb-4">HTML Resultante:</div>
+        <div class="result-label text-2xl font-bold mt-4">HTML Resultante:</div>
+        <div><p class="subtitle mb-4">Copiá el resultado, andá al editor de <span class="font-bold">Moodle</span>, activá la vista de código fuente HTML (botón <strong>&lt;/&gt;</strong>) y pegalo directamente.</p></div>
         <div class="relative">
           <button id="copy-btn" class="flex gap-4 btn-copy px-4 py-2 rounded-lg font-semibold mb-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -169,8 +173,8 @@
 
         {% if formatted_html %}
         <div class="flex justify-center">
-          <button type="button" id="clean-btn" class="mt-4 btn-primary px-8 py-3 rounded-xl font-bold text-lg cursor-pointer">
-            Limpiar Código 🧹
+          <button type="button" id="clean-btn" class="mt-8 btn-primary px-8 py-3 rounded-xl font-bold text-lg cursor-pointer">
+            Limpiar Código
           </button>
         </div>
         {% endif %}
@@ -195,7 +199,7 @@
         </a>
       </div>
       <p class="text-xs opacity-50">
-        &copy; <span id="year"></span> Moodlefy — Hecho con ❤️ y <a href="https://pygments.org/" target="_blank" 
+        &copy; <span id="year"></span> Moodlefy — Hecho con <a href="https://pygments.org/" target="_blank" 
           class="hover:text-[var(--text)] transition-all duration-300 font-medium">
           Pygments
         </a>
