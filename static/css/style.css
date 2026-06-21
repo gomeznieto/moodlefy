@@ -89,8 +89,8 @@ textarea:focus, select:focus {
 }
 
 .btn-copy {
-    background-color: var(--surface0);
-    color: var(--text);
+    background-color: var(--lavender);
+    color: var(--base);
     transition: all 0.3s;
 }
 
@@ -141,3 +141,10 @@ div.highlight pre {
     color: var(--mauve);
     font-size: 12px;
 }
+
+.description {
+    color: var(--surface1);
+    font-style: italic;
+    font-size: 12px;
+}
+
